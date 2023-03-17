@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>IMDB Ratings</title>
+        <script>
+
+            //  This function communicates with django (backend)
+
+            function getRating(review) {
+                fetch(`/model/${review}`)
+                .then(response => response.text())
+                .then(text => {
+                    document.querySelector('#rating').innerHTML = text;
+                });
+
+            }
+
+
+            document.addEventListener("DOMContentLoaded", function() {
+                document.querySelector('#send').onclick = function() {
+                        if(document.querySelector('#review').value != '') {
+                            getRating(document.querySelector('#review').value)
+                        } else {
+                            document.querySelector('#review').placeholder = 'Введите отзыв'
+                    }
+                }
+                });
+
+
+        </script>
+    </head>
+    <body>
+        <h1>Введите отзыв на английском языке</h1>
+        <textarea id="review" cols="120" rows="5">Amazing movie 10/10</textarea>
+        <input id="send" type="submit">
+
+        <!-- Contents loaded from server is inserted here by javascript -->
+        <div id="rating">
+
+        </div>
+
+    </body>
+</html>
